@@ -1,0 +1,83 @@
+void modificar ()	{
+MYSQL* connection;
+long alumno;
+string clave;
+string name;
+string correo;
+string promedio;
+string grado;
+string codigo_grado;
+string seccion;
+string sql;
+string nota1;
+string nota2;
+string nota3;
+string nota4;
+string x;
+int i, j, k, l;
+unsigned long   *lon;
+
+const char* query;
+int result;
+	connection = mysql_init(0);
+		if (connection) 
+	{
+		cout << "La biblioteca MySQL se ha iniciado correctamente" << endl;
+		connection = mysql_real_connect(connection, serverdb, userdb, passworddb, database, 3306, NULL, 0);
+		if (connection) 
+		{
+			cout << "Conexion exitosa a la base de datos" << endl;	
+			system("cls");
+			cout << "Ingresa el nombre del alumno que deseas modificar" << endl;
+			cin>>x;							
+        	getline(cin, clave);
+        	cout  <<"Ingrese el nuevo nombre del alumno: ";
+			getline(cin, name);
+			cout << "Ingrese el nuevo correo del alumno: ";
+			getline(cin, correo);
+   			cout << "Ingrese la nota nueva del primer bimestre : ";
+			getline(cin, nota1);
+			cout << "Ingrese la nota nueva del segundo bimestre : ";
+			getline(cin, nota2);
+			cout << "Ingrese la nota nueva del tercer bimestre : ";
+			getline(cin, nota3);
+			cout << "Ingrese la nota nueva del cuarto bimestre : ";
+			getline(cin, nota4);
+			MYSQL_ROW row;
+			MYSQL_RES* data;
+			sql = "UPDATE alumno SET name = ('" + name + "'), correo = ('" + correo + "'), nota1 = ('" + nota1 + "'), nota2 = ('" + nota2 + "'), nota3 = ('" + nota3 + "'), nota4 = ('" + nota4 + "') WHERE name = ('" + x + "')" ;
+			query = sql.c_str();
+			result = mysql_query(connection, query);
+			if (result == 0) 
+			{
+				cout << "Se han obtenido los datos de forma exitosa" << endl;
+				if((data=mysql_store_result(connection))){
+					i=(int)mysql_num_rows(data);
+					j=(int)mysql_num_fields(data);
+					cout<<endl<<"		Datos de Todos Los Alumnos"<<endl;
+					l=1;
+					for(l=0;l<i;l++){
+						row=mysql_fetch_row(data);
+						lon=mysql_fetch_lengths(data);
+						cout<<endl;
+						for(k=0;k<j;k++){
+					}
+					cout<<endl;
+				}
+			}
+			else
+			{
+				cout << "No fue posible obtener los registros " << mysql_error(connection) << endl;
+			}			
+}
+		else 
+		{
+			cout << "No fue posible conectarse a la base de datos: " << mysql_error(connection) << endl;
+		}
+	}
+	else 
+	{
+		cout << "No es posible iniciar la biblioteca de MySQL" << endl;
+	}
+	}
+	}
